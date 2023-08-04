@@ -115,10 +115,44 @@ services:
     plan: free # optional (defaults to starter instance type)
     maxmemoryPolicy: noeviction # optional (defaults to allkeys-lru)
   # GUnicorn
-  - name: app
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -w 3 main:app
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Gunicorn
+        run: |
+          python -m pip install --upgrade pip
+          pip install gunicorn
+
+      - name: Start Gunicorn
+        run: gunicorn -w 3 main:app
 
 databases:
   - name: elephant
