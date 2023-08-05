@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 import os
+import psycopg2
 
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
@@ -42,7 +43,7 @@ db_name = os.environ.get('database')
 db_user = os.environ.get('username')
 db_password = os.environ.get('password')
 
-conn = psycopg2.connect(
+conn = psycopg2-binary.connect(
     host=db_host,
     port=db_port,
     dbname=db_name,
