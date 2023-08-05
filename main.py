@@ -9,7 +9,6 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
-import psycopg2
 import os
 
 # Import your forms from the forms.py
