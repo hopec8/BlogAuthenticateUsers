@@ -43,7 +43,7 @@ db_name = os.environ.get('database')
 db_user = os.environ.get('username')
 db_password = os.environ.get('password')
 
-conn = psycopg2-binary.connect(
+conn = psycopg2.connect(
     host=db_host,
     port=db_port,
     dbname=db_name,
