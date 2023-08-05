@@ -8,7 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-import asyncpg
+from sqlalchemy import create_engine
+import psycopg2
+import os
 
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
@@ -35,6 +37,20 @@ Bootstrap5(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+db_host = os.environ.get('hostname')
+db_port = os.environ.get('port')
+db_name = os.environ.get('database')
+db_user = os.environ.get('username')
+db_password = os.environ.get('password')
+
+conn = psycopg2.connect(
+    host=db_host,
+    port=db_port,
+    dbname=db_name,
+    user=db_user,
+    password=db_password
+)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -51,13 +67,7 @@ gravatar = Gravatar(app,
                     use_ssl=False,
                     base_url=None)
 
-database_config = {
-    'user': 'user',
-    'password': 'vdP6nlC753ctAncWhh7gVGbisZDkAals',
-    'host': 'dpg-cj6pba45kgrc73dtnif0-a',
-    'port': '5432',
-    'database': 'db_er1i',
-    }
+
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'

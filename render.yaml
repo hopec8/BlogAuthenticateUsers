@@ -1,5 +1,16 @@
 services:
   # A Docker web service
+  - name: hopec8-blog
+    env:
+      DB_HOSTNAME: dpg-cj6pba45kgrc73dtnif0-a
+      DB_PORT: 5432
+      DB_USERNAME: user
+      DB_PASSWORD: vdP6nlC753ctAncWhh7gVGbisZDkAals
+      DB_NAME: db_er1i
+      EXTERNAL_URL: postgres://user:vdP6nlC753ctAncWhh7gVGbisZDkAals@dpg-cj6pba45kgrc73dtnif0-a.oregon-postgres.render.com/db_er1i
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 3 main:app
+
   - type: web
     name: webdis
     runtime: docker
